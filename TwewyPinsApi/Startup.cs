@@ -32,7 +32,12 @@ namespace TwewyPinsApi
             services.AddControllers();
 
             services.AddDbContext<PinsContext>(opt =>
-                                               opt.UseInMemoryDatabase("PinList"));
+                                               opt.UseSqlServer("Data Source=DESKTOP-VEG5L9A;Initial Catalog=PinMutation;Integrated Security=True"));
+            services.AddScoped<PinsContext>();
+                //UseSqlServer
+
+            //services.AddDbContext<PinsContext>(opt =>
+                                              // opt.UseInMemoryDatabase("PinList"));
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TwewyPinsApi", Version = "v1" });

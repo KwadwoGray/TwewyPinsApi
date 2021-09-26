@@ -10,6 +10,8 @@ namespace TwewyPinsApi.Models
         public long Id { get; set; }
         public string Info { get; set; }
         public bool Mutation { get; set; }
-        public string User { get; set; }
+        public string PinUser { get; set; }
+        public string PinNumber { get; set; }
+        public string Name { get; set; }
     }
 }

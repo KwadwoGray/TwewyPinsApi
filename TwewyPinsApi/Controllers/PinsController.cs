@@ -24,19 +24,20 @@ namespace TwewyPinsApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PinsDTO>>> GetPinItems()
         {
-            return await _context.PinItems
+            var hasdf = "hahaha";
+            return await _context.PinMutations
                 .Select(x => PinToDTO(x))
                 .ToListAsync();
             //using PinToDTO to map the results
 
-            //return await _context.PinItems.ToListAsync();
+            //return await _context.PinMutations.ToListAsync();
         }
 
         // GET: api/Pins/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PinsDTO>> GetPins(long id)
         {
-            var pins = await _context.PinItems.FindAsync(id);
+            var pins = await _context.PinMutations.FindAsync(id);
 
             if (pins == null)
             {
@@ -82,7 +83,7 @@ namespace TwewyPinsApi.Controllers
         //[HttpPost]
         //public async Task<ActionResult<Pins>> PostPins(Pins pins)
         //{
-        //    _context.PinItems.Add(pins);
+        //    _context.PinMutations.Add(pins);
         //    await _context.SaveChangesAsync();
 
         //    return CreatedAtAction(nameof(GetPins), new { id = pins.Id }, pins);
@@ -96,7 +97,7 @@ namespace TwewyPinsApi.Controllers
                 return BadRequest();
             }
 
-            var pinItem = await _context.PinItems.FindAsync(id);
+            var pinItem = await _context.PinMutations.FindAsync(id);
             if (pinItem == null)
             {
                 return NotFound();
@@ -104,7 +105,9 @@ namespace TwewyPinsApi.Controllers
 
             pinItem.Mutation = pinsDTO.Mutation;
             pinItem.Info = pinsDTO.Info;
-            pinItem.User = pinsDTO.User;
+            pinItem.PinNumber = pinsDTO.PinNumber;
+            pinItem.Name = pinsDTO.Name;
+            pinItem.PinUser = pinsDTO.PinUser;
 
             try
             {
@@ -125,10 +128,12 @@ namespace TwewyPinsApi.Controllers
             {
                 Mutation = pinsDTO.Mutation,
                 Info = pinsDTO.Info,
-                User = pinsDTO.User
+                PinUser = pinsDTO.PinUser,
+                PinNumber = pinsDTO.PinNumber,
+                Name = pinsDTO.Name
             };
 
-            _context.PinItems.Add(pin);
+            _context.PinMutations.Add(pin);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(
@@ -141,13 +146,13 @@ namespace TwewyPinsApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePins(long id)
         {
-            var pins = await _context.PinItems.FindAsync(id);
+            var pins = await _context.PinMutations.FindAsync(id);
             if (pins == null)
             {
                 return NotFound();
             }
 
-            _context.PinItems.Remove(pins);
+            _context.PinMutations.Remove(pins);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -155,10 +160,10 @@ namespace TwewyPinsApi.Controllers
 
         //private bool PinsExists(long id)
         //{
-        //    return _context.PinItems.Any(e => e.Id == id);
+        //    return _context.PinMutations.Any(e => e.Id == id);
         //}
         private bool PinsExists(long id) =>
-            _context.PinItems.Any(e => e.Id == id);
+            _context.PinMutations.Any(e => e.Id == id);
 
         private static PinsDTO PinToDTO(Pins pins) =>
             new PinsDTO
@@ -166,7 +171,9 @@ namespace TwewyPinsApi.Controllers
                 Id = pins.Id,
                 Info = pins.Info,
                 Mutation = pins.Mutation,
-                User = pins.User
+                PinUser = pins.PinUser,
+                PinNumber = pins.PinNumber,
+                Name = pins.Name
             };
     }
 }

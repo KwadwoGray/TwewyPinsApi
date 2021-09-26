@@ -14,6 +14,8 @@ namespace TwewyPinsApi.Models
 
         }
 
-        public DbSet<Pins> PinItems { get; set; }
+        public DbSet<Pins> PinMutations { get; set; }
+
+        public List<Pins> getPins() => PinMutations.Local.ToList<Pins>();
     }
 }
