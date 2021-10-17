@@ -7,7 +7,7 @@ namespace TwewyPinsApi.Models
 {
     public class PinsDTO
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public string Info { get; set; }
         public bool Mutation { get; set; }
         public string PinUser { get; set; }

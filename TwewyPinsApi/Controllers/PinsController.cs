@@ -24,7 +24,6 @@ namespace TwewyPinsApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PinsDTO>>> GetPinItems()
         {
-            var hasdf = "hahaha";
             return await _context.PinMutations
                 .Select(x => PinToDTO(x))
                 .ToListAsync();
@@ -130,7 +129,8 @@ namespace TwewyPinsApi.Controllers
                 Info = pinsDTO.Info,
                 PinUser = pinsDTO.PinUser,
                 PinNumber = pinsDTO.PinNumber,
-                Name = pinsDTO.Name
+                Name = pinsDTO.Name,
+                Id = pinsDTO.Id
             };
 
             _context.PinMutations.Add(pin);
